@@ -1,0 +1,35 @@
+name: Manually Main report
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup firefox
+        uses: browser-actions/setup-firefox@latest
+        with:
+          firefox-version: 'latest'
+
+      - uses: actions/checkout@v2
+
+      - name: Setup helium
+        shell: pwsh
+        run: |
+          pip3 install helium
+
+      - name: Auth
+        shell: pwsh
+        env:
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+        run: |
+          python auth.py
+
+      - name: Daily report.
+        env:
+          DAILY_REPORT_FORM: ${{ secrets.DAILY_REPORT_FORM }}
+        shell: pwsh
+        run: |
+          ./daily_report.ps1
