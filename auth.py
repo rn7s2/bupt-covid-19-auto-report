@@ -11,7 +11,7 @@ def auth(round):
         print('attempt to auth, round ', round)
 
         start_firefox(
-            'https://ap.bupt.edu.cn/site/ncov/xisudailyup', headless=True)
+            'https://app.bupt.edu.cn/site/ncov/xisudailyup', headless=True)
 
         wait_until(Text("密码登录").exists, TIMEOUT)
         click("密码登录")
